@@ -1,25 +1,37 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { useState } from "react";
 import "./App.css";
+import { Palette } from "./components/Palette";
+import { createTheme, PaletteMode, ThemeProvider } from "@mui/material";
 
 function App() {
+  const [mode, setMode] = useState<PaletteMode>("light");
+  const [primaryColor, setPrimaryColor] = useState("#90caf9");
+
+  const theme = createTheme({
+    palette: {
+      mode,
+      primary: {
+        main: primaryColor,
+        light: primaryColor,
+        dark: primaryColor,
+      },
+    },
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div
+        className="App"
+        style={{ background: theme.palette.background.default }}
+      >
+        <Palette
+          onSelectedPrimaryColor={(color) => {
+            setMode(color.isLight ? "light" : "dark");
+            setPrimaryColor(color.value);
+          }}
+        />
+      </div>
+    </ThemeProvider>
   );
 }
 
