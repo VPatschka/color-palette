@@ -14,6 +14,7 @@ function App() {
         main: primaryColor,
         light: primaryColor,
         dark: primaryColor,
+        contrastText: primaryColor,
       },
     },
   });

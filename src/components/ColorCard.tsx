@@ -4,7 +4,7 @@ import { Button, Card, CardActions, CardContent } from "@mui/material";
 
 type ColorCardProps = {
   color: Color;
-  toggleLike: (color: Color) => void;
+  toggleLike?: (color: Color) => void;
   setAsPrimary: (color: Color) => void;
 };
 
@@ -28,9 +28,11 @@ export const ColorCard: FC<ColorCardProps> = ({
         {color.value}
       </CardContent>
       <CardActions>
-        <Button onClick={() => toggleLike(color)} size="small">
-          {color.liked ? "Unlike" : "Like"}
-        </Button>
+        {toggleLike && (
+          <Button onClick={() => toggleLike(color)} size="small">
+            {color.liked ? "Unlike" : "Like"}
+          </Button>
+        )}
         <Button onClick={() => setAsPrimary(color)} size="small">
           Set as Primary Color
         </Button>
