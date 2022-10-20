@@ -11,31 +11,31 @@ type PaletteProps = {
 const NUMBER_OF_COLORS = 8;
 
 export const Palette: FC<PaletteProps> = ({ onSelectedPrimaryColor }) => {
-  const [colors, setColors] = useState<Color[]>([]);
+  const [generatedColors, setGeneratedColors] = useState<Color[]>([]);
   const [primaryColors, setPrimaryColors] = useState<Color[]>([]);
   const theme = useTheme();
 
   const generateColorPalette = useCallback(() => {
-    const likedColors = colors.filter((color) => color.liked);
-    setColors([
+    const likedColors = generatedColors.filter((color) => color.liked);
+    setGeneratedColors([
       ...likedColors,
       ...Array(NUMBER_OF_COLORS - likedColors.length)
         .fill(undefined)
         .map((_) => generateColor()),
     ]);
-  }, [colors]);
+  }, [generatedColors]);
 
   const toggleColorLike = useCallback(
     (selectedColor: Color) => {
-      setColors(
-        colors.map((color) =>
+      setGeneratedColors(
+        generatedColors.map((color) =>
           color.value !== selectedColor.value
             ? color
             : { ...color, liked: !color.liked }
         )
       );
     },
-    [colors]
+    [generatedColors]
   );
 
   const handleSetAsPrimaryColor = useCallback(
@@ -54,7 +54,7 @@ export const Palette: FC<PaletteProps> = ({ onSelectedPrimaryColor }) => {
         Generate Color Palette
       </Button>
       <Stack direction="row" spacing={0} flexWrap="wrap">
-        {colors.map((color) => (
+        {generatedColors.map((color) => (
           <ColorCard
             key={color.value}
             color={color}
